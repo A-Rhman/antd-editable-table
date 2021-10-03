@@ -1,13 +1,12 @@
-import React, { useMemo, useContext, useEffect } from 'react';
-import { Checkbox } from 'antd';
-import { EditableTableContext } from './editableTable';
+import React, { useMemo, useContext, useEffect } from "react";
+import { Checkbox } from "antd";
+import { EditableTableContext } from "./editableTableBody";
 
-const EditableTableCheckbox = ({ checked, onChange, ...rest }) => {
+const CheckboxEditCell = ({ checked, onChange, ...rest }) => {
   const { stopEditing, moveFocus } = useContext(EditableTableContext);
   const prevValue = useMemo(() => checked);
-
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeydownOnEdit = (e) => {
       switch (e.keyCode) {
         case 27:
           onChange(prevValue);
@@ -15,14 +14,14 @@ const EditableTableCheckbox = ({ checked, onChange, ...rest }) => {
           break;
         case 13:
           stopEditing();
-          moveFocus('down');
+          moveFocus("down");
           break;
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeydownOnEdit);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeydownOnEdit);
     };
   }, []);
 
@@ -37,4 +36,4 @@ const EditableTableCheckbox = ({ checked, onChange, ...rest }) => {
   );
 };
 
-export default EditableTableCheckbox;
+export default CheckboxEditCell;

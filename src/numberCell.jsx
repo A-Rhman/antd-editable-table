@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { Form } from "antd";
-import InputViewCell from "./inputViewCell";
-import InputEditCell from "./inputEditCell";
+import NumberViewCell from "./numberViewCell";
+import NumberEditCell from "./numberEditCell";
 import { EditableTableContext } from "./editableTableBody";
 
 const InputCell = ({
   itemProps,
   focused,
-  disabled,
   editing,
   onClick,
+  disabled,
   columnKey,
   rowKey,
 }) => {
@@ -17,12 +17,12 @@ const InputCell = ({
   return (
     <Form.Item name={[dataKey, rowKey, columnKey]} noStyle>
       {editing ? (
-        <InputEditCell {...itemProps} />
+        <NumberEditCell {...itemProps} />
       ) : (
-        <InputViewCell
-          disabled={disabled}
+        <NumberViewCell
           onClick={onClick}
           focused={focused}
+          disabled={disabled}
         />
       )}
     </Form.Item>

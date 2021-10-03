@@ -3,9 +3,18 @@
   padding: 5px 12px;
 }
 .cell-focused {
-  border: 1px solid blue;
+  border: 1.5px dashed blue;
+}
+.cell-disabled {
+  color: gray;
+  background: #f2f2f2;
 }
 
 .ant-table-tbody > tr > td {
   padding: 0;
+}
+
+.editable-table .ant-select,
+.editable-table .ant-input-number {
+  width: 100%;
 }

@@ -1,32 +1,30 @@
 import React, { useContext } from "react";
 import { Form } from "antd";
-import InputViewCell from "./inputViewCell";
-import InputEditCell from "./inputEditCell";
+import SelectViewCell from "./selectViewCell";
+import SelectEditCell from "./selectEditCell";
 import { EditableTableContext } from "./editableTableBody";
 
-const InputCell = ({
+const SelectCell = ({
   itemProps,
   focused,
-  disabled,
   editing,
   onClick,
   columnKey,
+  disabled,
   rowKey,
+  onFilter,
+  options,
 }) => {
   const { dataKey } = useContext(EditableTableContext);
   return (
     <Form.Item name={[dataKey, rowKey, columnKey]} noStyle>
       {editing ? (
-        <InputEditCell {...itemProps} />
+        <SelectEditCell {...{ ...itemProps, options, rowKey, onFilter }} />
       ) : (
-        <InputViewCell
-          disabled={disabled}
-          onClick={onClick}
-          focused={focused}
-        />
+        <SelectViewCell {...{ options, rowKey, onClick, focused, disabled }} />
       )}
     </Form.Item>
   );
 };
 
-export default InputCell;
+export default SelectCell;

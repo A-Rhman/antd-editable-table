@@ -1,13 +1,13 @@
-import React, { useMemo, useContext, useEffect } from 'react';
-import { Input } from 'antd';
-import { EditableTableContext } from './editableTable';
+import React, { useMemo, useContext, useEffect } from "react";
+import { InputNumber } from "antd";
+import { EditableTableContext } from "./editableTableBody";
 
-const EditableTableInput = ({ value, onChange, ...rest }) => {
+const NumberEditCell = ({ value, onChange, ...rest }) => {
   const { stopEditing, moveFocus } = useContext(EditableTableContext);
   const prevValue = useMemo(() => value);
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeydownOnEdit = (e) => {
       switch (e.keyCode) {
         case 27:
           onChange(prevValue);
@@ -15,19 +15,19 @@ const EditableTableInput = ({ value, onChange, ...rest }) => {
           break;
         case 13:
           stopEditing();
-          moveFocus('down');
+          moveFocus("down");
           break;
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeydownOnEdit);
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeydownOnEdit);
     };
   }, []);
 
   return (
-    <Input
+    <InputNumber
       autoFocus
       onBlur={stopEditing}
       onChange={onChange}
@@ -37,4 +37,4 @@ const EditableTableInput = ({ value, onChange, ...rest }) => {
   );
 };
 
-export default EditableTableInput;
+export default NumberEditCell;

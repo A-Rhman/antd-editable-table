@@ -1,7 +1,8 @@
-import React from 'react';
-import { Form } from 'antd';
-import CellBoolView from './cellBoolView';
-import EditableTableCheckbox from './editableTableCheckbox';
+import React, { useContext } from "react";
+import { Form } from "antd";
+import CheckboxViewCell from "./checkboxViewCell";
+import CheckboxEditCell from "./checkboxEditCell";
+import { EditableTableContext } from "./editableTableBody";
 
 const CheckboxCell = ({
   itemProps,
@@ -9,18 +10,24 @@ const CheckboxCell = ({
   editing,
   onClick,
   columnKey,
+  disabled,
   rowKey,
 }) => {
+  const { dataKey } = useContext(EditableTableContext);
   return (
     <Form.Item
-      name={['data', rowKey, columnKey]}
+      name={[dataKey, rowKey, columnKey]}
       noStyle
       valuePropName="checked"
     >
       {editing ? (
-        <EditableTableCheckbox {...itemProps} />
+        <CheckboxEditCell {...itemProps} />
       ) : (
-        <CellBoolView onClick={onClick} focused={focused} />
+        <CheckboxViewCell
+          onClick={onClick}
+          focused={focused}
+          disabled={disabled}
+        />
       )}
     </Form.Item>
   );
