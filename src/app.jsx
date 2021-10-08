@@ -40,7 +40,7 @@ const App = () => {
   const [tableForm] = Form.useForm();
 
   const getUnitsOptions = (rowKey) => {
-    const { data } = tableForm.getFieldsValue(true);
+    const { units: data } = tableForm.getFieldsValue(true);
     const filteredUnits = data?.filter((row) => row.key !== rowKey);
     const selectedUnits = filteredUnits.map((row) => row.unit);
     return units.filter((unit) => !selectedUnits.includes(unit.id));

@@ -10,10 +10,12 @@ const NumberEditCell = ({ value, onChange, ...rest }) => {
     const handleKeydownOnEdit = (e) => {
       switch (e.keyCode) {
         case 27:
+          // Esc
           onChange(prevValue);
           stopEditing();
           break;
         case 13:
+          // Enter
           stopEditing();
           moveFocus("down");
           break;

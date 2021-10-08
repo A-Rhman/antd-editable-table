@@ -5,8 +5,11 @@ import { Form } from "antd";
 const EditableTable = ({ dataKey = "data", columns, defaultSelected }) => {
   return (
     <Form.Item
-      shouldUpdate={(curr, prev) =>
+      shouldUpdate={
+        true
+        /*(curr, prev) =>
         curr[dataKey]?.length !== prev[dataKey]?.length
+      */
       }
       noStyle
     >
