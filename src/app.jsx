@@ -1,6 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Form, Button, Input } from "antd";
 import EditableTable from "./editableTable";
+import DragTest from "./dragMove";
+import ResizableTitle from "./resizeableTableHeader";
 
 const dataSource = [
   {
@@ -23,7 +25,7 @@ const dataSource = [
     key: 2,
     name: "Jan Russler",
     age: 32,
-    status: true,
+    status: false,
     address: null,
     unit: 3,
   },
@@ -38,6 +40,11 @@ const units = [
 
 const App = () => {
   const [tableForm] = Form.useForm();
+  const initialCheckedKeys = dataSource
+    .filter((e) => e.status)
+    .map((e) => e.key);
+
+  const [checkedKeys, setCheckedKeys] = useState(initialCheckedKeys || []);
 
   const getUnitsOptions = (rowKey) => {
     const { units: data } = tableForm.getFieldsValue(true);
@@ -46,10 +53,33 @@ const App = () => {
     return units.filter((unit) => !selectedUnits.includes(unit.id));
   };
 
+  const getCheckedStatus = (row) => {
+    return checkedKeys.length > 2 && !row.status;
+  };
+
+  const handleCheckchange =
+    (row) =>
+    ({ target }) => {
+      setCheckedKeys((keys) => {
+        const nextState = target.checked
+          ? [...keys, row.key]
+          : keys.filter((k) => k !== row.key);
+        return nextState;
+      });
+    };
+
   const columns = [
+    {
+      title: "Nr.",
+      width: 60,
+      align: "center",
+      key: "nr",
+      render: (value, row, index) => <>{index + 1}</>,
+    },
     {
       title: "Name",
       dataIndex: "name",
+      width: 200,
       key: "name",
       editable: {
         type: "string",
@@ -59,6 +89,7 @@ const App = () => {
       title: "Age",
       dataIndex: "age",
       key: "age",
+      width: 100,
       editable: (row) => ({
         type: "number",
         disabled: row.key === 0,
@@ -69,14 +100,20 @@ const App = () => {
       title: "status",
       dataIndex: "status",
       key: "status",
-      editable: {
+      width: 100,
+      editable: (row) => ({
         type: "checkbox",
-      },
+        disabled: getCheckedStatus(row),
+        props: {
+          onChange: handleCheckchange(row),
+        },
+      }),
     },
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      width: 100,
       editable: (row) => ({
         type: "select",
         disabled: row.key === 0,
@@ -116,6 +153,7 @@ const App = () => {
       <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
+      <DragTest />
       <EditableTable
         dataKey="units"
         columns={columns}
