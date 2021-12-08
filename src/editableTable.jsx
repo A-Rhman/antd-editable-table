@@ -4,15 +4,7 @@ import { Form } from "antd";
 
 const EditableTable = ({ dataKey = "data", columns, defaultSelected }) => {
   return (
-    <Form.Item
-      shouldUpdate={
-        true
-        /*(curr, prev) =>
-        curr[dataKey]?.length !== prev[dataKey]?.length
-      */
-      }
-      noStyle
-    >
+    <Form.Item shouldUpdate noStyle>
       {({ getFieldsValue, setFieldsValue }) => {
         const data = getFieldsValue(true)[dataKey];
         const handleAddRow = () => {

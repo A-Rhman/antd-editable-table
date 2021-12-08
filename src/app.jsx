@@ -1,13 +1,12 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button, Input } from "antd";
 import EditableTable from "./editableTable";
 import DragTest from "./dragMove";
-import ResizableTitle from "./resizeableTableHeader";
 
 const dataSource = [
   {
     key: 0,
-    name: "Jhon duo",
+    name: "John doe",
     age: 32,
     status: true,
     address: 1,
@@ -15,7 +14,7 @@ const dataSource = [
   },
   {
     key: 1,
-    name: "Tohmas Walter",
+    name: "Thomas Walter",
     age: 42,
     status: true,
     address: 1,
@@ -79,7 +78,6 @@ const App = () => {
     {
       title: "Name",
       dataIndex: "name",
-      width: 200,
       key: "name",
       editable: {
         type: "string",
@@ -89,7 +87,6 @@ const App = () => {
       title: "Age",
       dataIndex: "age",
       key: "age",
-      width: 100,
       editable: (row) => ({
         type: "number",
         disabled: row.key === 0,
@@ -100,7 +97,6 @@ const App = () => {
       title: "status",
       dataIndex: "status",
       key: "status",
-      width: 100,
       editable: (row) => ({
         type: "checkbox",
         disabled: getCheckedStatus(row),
@@ -113,7 +109,6 @@ const App = () => {
       title: "Address",
       dataIndex: "address",
       key: "address",
-      width: 100,
       editable: (row) => ({
         type: "select",
         disabled: row.key === 0,
@@ -149,7 +144,10 @@ const App = () => {
   };
 
   return (
-    <Form initialValues={{ name: "Ahmad", units: dataSource }} form={tableForm}>
+    <Form
+      initialValues={{ name: "Reports", units: dataSource }}
+      form={tableForm}
+    >
       <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
